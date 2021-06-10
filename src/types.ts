@@ -4,6 +4,11 @@ export type InitOptions = {
   parseMasterKey?: string
 }
 
+export type ParseError = {
+  code: number
+  error: string
+}
+
 export type SchemaField = {
   type: string
   targetClass?: string
