@@ -55,3 +55,7 @@ ps-mst-cli gs
 # License
 
 MIT - see LICENSE
+
+# Todo
+
+[ ] Handle required and default value of field

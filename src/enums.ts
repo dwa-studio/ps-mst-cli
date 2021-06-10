@@ -17,7 +17,7 @@ export enum MST_TYPES {
   STRING = 'types.string',
   DATE = 'types.Date',
   OBJECT = 'types.frozen()',
-  FILE = 'ImageModel',
+  FILE = 'FileModel',
   BOOLEAN = 'types.boolean',
   POINTER = `types.reference(__MODEL__)`,
   RELATION = `types.array(types.reference(__MODEL__))`,
