@@ -6,7 +6,7 @@ const command: GluegunCommand = {
     const { print } = toolbox
 
     print.info('Welcome to your ps-mst-cli')
-  }
+  },
 }
 
 module.exports = command

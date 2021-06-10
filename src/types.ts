@@ -1,3 +1,9 @@
+export type InitOptions = {
+  parseServerUrl?: string
+  parseAppId?: string
+  parseMasterKey?: string
+}
+
 export type SchemaField = {
   type: string
   targetClass?: string
