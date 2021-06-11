@@ -9,7 +9,7 @@ export async function generateModels(
   generate: (options: GluegunTemplateGenerateOptions) => void,
   info: (msg: string) => void
 ): Promise<void> {
-  schemas.map(async schema => {
+  schemas.forEach(async schema => {
     const fields = getMSTFields(schema.fields)
     const imports = getImports(fields)
     await generate({
@@ -27,7 +27,7 @@ export async function generateStores(
   info: (msg: string) => void,
   strings: GluegunStrings
 ): Promise<void> {
-  schemas.map(async schema => {
+  schemas.forEach(async schema => {
     await generate({
       template: 'store.ts.ejs',
       target: `models/${schema.className}Store/${schema.className}Store.ts`,
