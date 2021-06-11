@@ -19,39 +19,39 @@ export class ApiClient {
 
   constructor(config: ParseServerConfig, _httpClient?: any) {
     let headers: any = {
-      [PARSE_APP_ID_HEADER]: config.appID
+      [PARSE_APP_ID_HEADER]: config.appID,
     }
     if (config.restApiKey) {
       headers = {
         ...headers,
-        [PARSE_RESTAPI_KEY_HEADER]: config.restApiKey
+        [PARSE_RESTAPI_KEY_HEADER]: config.restApiKey,
       }
     }
     this.httpClient =
       _httpClient ??
       create({
         baseURL: config.url,
-        headers
+        headers,
       })
   }
 
-  async get<T>(path: string): Promise<T> {
-    const response = await this.httpClient.get<T, ParseError>(path)
+  async get<T>(path: string, data?: any, headers?: Record<string, string | number | boolean>): Promise<T> {
+    const response = await this.httpClient.get<T, ParseError>(path, data, headers)
     return this.handleResponse(response)
   }
 
-  async post<T>(path: string, data?: any): Promise<T> {
-    const response = await this.httpClient.post<T, ParseError>(path, data)
+  async post<T>(path: string, data?: any, headers?: Record<string, string | number | boolean>): Promise<T> {
+    const response = await this.httpClient.post<T, ParseError>(path, data, headers)
     return this.handleResponse(response)
   }
 
-  async put<T>(path: string, data?: any): Promise<T> {
-    const response = await this.httpClient.put<T, ParseError>(path, data)
+  async put<T>(path: string, data?: any, headers?: Record<string, string | number | boolean>): Promise<T> {
+    const response = await this.httpClient.put<T, ParseError>(path, data, headers)
     return this.handleResponse(response)
   }
 
-  async delete<T>(path: string): Promise<T> {
-    const response = await this.httpClient.delete<T, ParseError>(path)
+  async delete<T>(path: string, data?: any, headers?: Record<string, string | number | boolean>): Promise<T> {
+    const response = await this.httpClient.delete<T, ParseError>(path, data, headers)
     return this.handleResponse(response)
   }
 

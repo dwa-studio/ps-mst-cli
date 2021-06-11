@@ -1,8 +1,8 @@
 import { getImports, getMSTFields } from './schema'
 
-import { GluegunStrings } from 'gluegun'
 import { GluegunTemplateGenerateOptions } from 'gluegun/build/types/toolbox/template-types'
 import { Schema } from '../types'
+import { strings } from 'gluegun'
 
 export async function generateModels(
   schemas: Schema[],
@@ -24,8 +24,7 @@ export async function generateModels(
 export async function generateStores(
   schemas: Schema[],
   generate: (options: GluegunTemplateGenerateOptions) => void,
-  info: (msg: string) => void,
-  strings: GluegunStrings
+  info: (msg: string) => void
 ): Promise<void> {
   const stores = []
   schemas.forEach(async schema => {

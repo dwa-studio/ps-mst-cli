@@ -1,45 +1,52 @@
-import { ApiClient } from "./api-client"
-import { stringify } from 'query-string' 
+import { ApiClient } from './api-client'
 
 export class ParseObjectClassService<T> {
-    apiClient: ApiClient
-    className: string
-    basePath = '/classes'
-  
-    constructor(_className: string, _client: ApiClient) {
-      this.apiClient = _client
-      this.className = _className
-    }
-  
-    async get(objectId: string): Promise<T> {
-      return this.apiClient.get<T>(
-        `${this.basePath}/${this.className}/${objectId}`
-      )
-    }
-  
-    async query(queryParams?: Record<any, any>): Promise<T> {
-      const queryString = stringify(queryParams)
-      return this.apiClient.get<T>(
-        `${this.basePath}/${this.className}${
-          queryString ? '?' + queryString : ''
-        }`
-      )
-    }
-  
-    async create(data: any): Promise<T> {
-      return this.apiClient.post<T>(`${this.basePath}/${this.className}`, data)
-    }
-  
-    async update(objectId: string, data: any): Promise<T> {
-      return this.apiClient.put<T>(
-        `${this.basePath}/${this.className}}/${objectId}`,
-        data
-      )
-    }
-  
-    async delete(objectId: string): Promise<T> {
-      return this.apiClient.delete<T>(
-        `${this.basePath}/${this.className}}/${objectId}`
-      )
-    }
+  apiClient: ApiClient
+  className: string
+  basePath = '/classes'
+
+  constructor(_className: string, _client: ApiClient) {
+    this.apiClient = _client
+    this.className = _className
   }
+
+  async get(objectId: string, sessionToken?: string): Promise<T> {
+    return this.apiClient.get<T>(
+      `${this.basePath}/${this.className}/${objectId}`,
+      {},
+      sessionToken ? { 'X-Parse-Session-Token': sessionToken } : {}
+    )
+  }
+
+  async query(queryParams?: Record<any, any>, sessionToken?: string): Promise<T> {
+    return this.apiClient.get<T>(
+      `${this.basePath}/${this.className}`,
+      queryParams,
+      sessionToken ? { 'X-Parse-Session-Token': sessionToken } : {}
+    )
+  }
+
+  async create(data: any, sessionToken?: string): Promise<T> {
+    return this.apiClient.post<T>(
+      `${this.basePath}/${this.className}`,
+      data,
+      sessionToken ? { 'X-Parse-Session-Token': sessionToken } : {}
+    )
+  }
+
+  async update(objectId: string, data: any, sessionToken?: string): Promise<T> {
+    return this.apiClient.put<T>(
+      `${this.basePath}/${this.className}/${objectId}`,
+      data,
+      sessionToken ? { 'X-Parse-Session-Token': sessionToken } : {}
+    )
+  }
+
+  async delete(objectId: string, data?: any, sessionToken?: string): Promise<T> {
+    return this.apiClient.delete<T>(
+      `${this.basePath}/${this.className}/${objectId}`,
+      data,
+      sessionToken ? { 'X-Parse-Session-Token': sessionToken } : {}
+    )
+  }
+}
