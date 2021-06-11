@@ -1,4 +1,4 @@
-import { GluegunToolbox, filesystem, strings } from 'gluegun'
+import { GluegunToolbox, filesystem } from 'gluegun'
 import { generateCommons, generateModels, generateStores } from '../utils/store'
 
 import { InitOptions } from '../types'
@@ -24,7 +24,7 @@ module.exports = {
     try {
       const schemas = await getSchemas(options.parseServerUrl, options.parseAppId, options.parseMasterKey)
       await generateModels(schemas, generate, print.info)
-      await generateStores(schemas, generate, print.info, strings)
+      await generateStores(schemas, generate, print.info)
       await generateCommons(generate, print.info)
     } catch (error) {
       print.error('Error : ')

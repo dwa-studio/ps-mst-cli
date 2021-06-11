@@ -22,7 +22,9 @@ export async function getSchemas(serverUrl, appId, masterKey): Promise<Schema[]>
   if (response.problem) {
     throw response.data as ParseError
   }
-  return (response.data as SchemaResponse).results
+  return (response.data as SchemaResponse).results.map(schema =>
+    schema.className.startsWith('_') ? { ...schema, className: schema.className.replace('_', '') } : schema
+  )
 }
 
 /**
