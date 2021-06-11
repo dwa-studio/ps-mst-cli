@@ -14,5 +14,10 @@ export async function generateServices(
     target: `services/parse-object.ts`,
   })
 
+  await generate({
+    template: 'service-user.ts.ejs',
+    target: `services/user.ts`,
+  })
+
   info(`services files generated !`)
 }
