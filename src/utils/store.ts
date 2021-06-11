@@ -49,3 +49,14 @@ export async function generateStores(
   })
   info(`RootStore store generated !`)
 }
+
+export async function generateCommons(
+  generate: (options: GluegunTemplateGenerateOptions) => void,
+  info: (msg: string) => void
+): Promise<void> {
+  await generate({
+    template: 'common.ts.ejs',
+    target: `models/common.ts`,
+  })
+  info(`common files store generated !`)
+}
