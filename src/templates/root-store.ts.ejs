@@ -1,0 +1,14 @@
+import { types, Instance, SnapshotIn, SnapshotOut } from 'mobx-state-tree';
+<% props.stores.forEach(function(store){ %>
+    import {<%= store.className %>StoreModel} from '../<%= store.className %>Store/<%= store.className %>Store'
+<%});%>
+
+export const RootStoreModel = types.model('RootStore', {
+  <% props.stores.forEach(function(store){ %>
+    <%- store.camelCaseName %>Store: types.optional(<%- store.className %>Model, {}),
+  <%});%>
+});
+
+export interface RootStore extends Instance<typeof RootStoreModel> {} 
+export interface RootStoreSnapshotIn extends SnapshotIn<typeof RootStoreModel> {} 
+export interface RootStoreSnapshotOut extends SnapshotOut<typeof RootStoreModel> {}

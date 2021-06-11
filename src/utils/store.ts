@@ -27,15 +27,25 @@ export async function generateStores(
   info: (msg: string) => void,
   strings: GluegunStrings
 ): Promise<void> {
+  const stores = []
   schemas.forEach(async schema => {
+    const store = {
+      name: schema.className,
+      camelCasedName: strings.camelCase(schema.className),
+    }
+    stores.push(store)
     await generate({
       template: 'store.ts.ejs',
       target: `models/${schema.className}Store/${schema.className}Store.ts`,
-      props: {
-        name: schema.className,
-        camelCasedName: strings.camelCase(schema.className),
-      },
+      props: store,
     })
     info(`${schema.className}Store store generated !`)
   })
+
+  await generate({
+    template: 'root-store.ts.ejs',
+    target: `models/RootStore/RootStore.ts`,
+    props: { stores },
+  })
+  info(`RootStore store generated !`)
 }
