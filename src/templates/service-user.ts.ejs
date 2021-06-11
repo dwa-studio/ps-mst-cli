@@ -11,39 +11,55 @@ export class UserService<T> {
     this.apiClient = _client
   }
 
-  signup(data: any): Promise<Omit<UserSnapshotOut, 'password'>> {
-    return this.apiClient.post<T>('users/', data)
+  signup(data: any) {
+    return this.apiClient.post<Omit<UserSnapshotOut, 'password'>>('users/', data)
   }
 
-  login(data: loginData): Promise<Omit<UserSnapshotOut, 'password'>> {
-    return this.apiClient.get<T>('login', data)
+  login(data: loginData) {
+    return this.apiClient.get<Omit<UserSnapshotOut, 'password'>>('login', data)
   }
 
   logout(sessionToken: string): Promise<{}> {
-    return this.apiClient.post<T>(`logout`, {}, { 'X-Parse-Session-Token': sessionToken })
+    return this.apiClient.post<{}>(`logout`, {}, { 'X-Parse-Session-Token': sessionToken })
   }
 
-  find(id: string, sessionToken?: string): Promise<Omit<UserSnapshotOut, 'password'>> {
-    return this.apiClient.get<T>(`users/${id}`, {}, sessionToken ? { 'X-Parse-Session-Token': sessionToken } : {})
+  find(id: string, sessionToken?: string) {
+    return this.apiClient.get<Omit<UserSnapshotOut, 'password'>>(
+      `users/${id}`,
+      {},
+      sessionToken ? { 'X-Parse-Session-Token': sessionToken } : {}
+    )
   }
 
-  me(sessionToken: string): Promise<Omit<UserSnapshotOut, 'password'>> {
-    return this.apiClient.get<T>('users/', {}, { 'X-Parse-Session-Token': sessionToken })
+  me(sessionToken: string) {
+    return this.apiClient.get<Omit<UserSnapshotOut, 'password'>>(
+      'users/',
+      {},
+      { 'X-Parse-Session-Token': sessionToken }
+    )
   }
 
-  update(id: string, data: any, sessionToken?: string): Promise<Omit<UserSnapshotOut, 'password'>> {
-    return this.apiClient.put<T>(`users/${id}`, data, sessionToken ? { 'X-Parse-Session-Token': sessionToken } : {})
+  update(id: string, data: any, sessionToken?: string) {
+    return this.apiClient.put<{ updateAt: string }>(
+      `users/${id}`,
+      data,
+      sessionToken ? { 'X-Parse-Session-Token': sessionToken } : {}
+    )
   }
 
-  query(data: any, sessionToken?: string): Promise<Omit<UserSnapshotOut, 'password'>> {
-    return this.apiClient.get<T>('users/', data, sessionToken ? { 'X-Parse-Session-Token': sessionToken } : {})
+  query(data: any, sessionToken?: string) {
+    return this.apiClient.get<Omit<UserSnapshotOut, 'password'>[]>(
+      'users/',
+      data,
+      sessionToken ? { 'X-Parse-Session-Token': sessionToken } : {}
+    )
   }
 
-  delete(id: string, sessionToken?: string): Promise<Omit<UserSnapshotOut, 'password'>> {
-    return this.apiClient.delete<T>('users/', {}, sessionToken ? { 'X-Parse-Session-Token': sessionToken } : {})
+  delete(id: string, sessionToken?: string) {
+    return this.apiClient.delete<{}>('users/', {}, sessionToken ? { 'X-Parse-Session-Token': sessionToken } : {})
   }
 
-  requestPasswordReset(data: any): Promise<Omit<UserSnapshotOut, 'password'>> {
-    return this.apiClient.post<T>('users/', data)
+  requestPasswordReset(data: any) {
+    return this.apiClient.post<{}>('users/', data)
   }
 }
