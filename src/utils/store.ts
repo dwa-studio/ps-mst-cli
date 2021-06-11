@@ -1,5 +1,6 @@
 import { getImports, getMSTFields } from './schema'
 
+import { GluegunStrings } from 'gluegun'
 import { GluegunTemplateGenerateOptions } from 'gluegun/build/types/toolbox/template-types'
 import { Schema } from '../types'
 
@@ -8,7 +9,7 @@ export async function generateModels(
   generate: (options: GluegunTemplateGenerateOptions) => void,
   info: (msg: string) => void
 ): Promise<void> {
-  schemas.map(async schema => {
+  schemas.forEach(async schema => {
     const fields = getMSTFields(schema.fields)
     const imports = getImports(fields)
     await generate({
@@ -18,4 +19,44 @@ export async function generateModels(
     })
     info(`${schema.className} model generated !`)
   })
+}
+
+export async function generateStores(
+  schemas: Schema[],
+  generate: (options: GluegunTemplateGenerateOptions) => void,
+  info: (msg: string) => void,
+  strings: GluegunStrings
+): Promise<void> {
+  const stores = []
+  schemas.forEach(async schema => {
+    const store = {
+      name: schema.className,
+      camelCasedName: strings.camelCase(schema.className),
+    }
+    stores.push(store)
+    await generate({
+      template: 'store.ts.ejs',
+      target: `models/${schema.className}Store/${schema.className}Store.ts`,
+      props: store,
+    })
+    info(`${schema.className}Store store generated !`)
+  })
+
+  await generate({
+    template: 'root-store.ts.ejs',
+    target: `models/RootStore/RootStore.ts`,
+    props: { stores },
+  })
+  info(`RootStore store generated !`)
+}
+
+export async function generateCommons(
+  generate: (options: GluegunTemplateGenerateOptions) => void,
+  info: (msg: string) => void
+): Promise<void> {
+  await generate({
+    template: 'common.ts.ejs',
+    target: `models/common.ts`,
+  })
+  info(`common files store generated !`)
 }
