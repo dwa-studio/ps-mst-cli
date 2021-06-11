@@ -1,0 +1,9 @@
+import { types, Instance, SnapshotIn, SnapshotOut } from 'mobx-state-tree';
+import {<%= props.name %>Model} from '../<%= props.name %>/<%= props.name %>'
+export const <%= props.name %>StoreModel = types.model('<%= props.name %>Store', {
+    <%= props.camelCasedName %>Map:types.map(<%= props.name %>Model)
+});
+
+export interface <%= props.name %>Store extends Instance<typeof <%= props.name %>StoreModel> {} 
+export interface <%= props.name %>StoreSnapshotIn extends SnapshotIn<typeof <%= props.name %>StoreModel> {} 
+export interface <%= props.name %>StoreSnapshotOut extends SnapshotOut<typeof <%= props.name %>StoreModel> {}

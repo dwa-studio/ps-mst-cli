@@ -34,6 +34,6 @@ module.exports = {
       return
     }
 
-    print.info(`Generated files at models`)
+    print.success(`Generated files at models`)
   },
 }
