@@ -1,0 +1,64 @@
+import { ApiResponse, ApisauceInstance, create } from 'apisauce'
+
+const PARSE_APP_ID_HEADER = 'X-Parse-Application-Id'
+const PARSE_RESTAPI_KEY_HEADER = 'X-Parse-Rest-Api-Key'
+
+interface ParseError {
+  code: number
+  error: string
+}
+
+interface ParseServerConfig {
+  url: string
+  appID: string
+  restApiKey?: string
+}
+
+export class ApiClient {
+  httpClient: ApisauceInstance
+
+  constructor(config: ParseServerConfig, _httpClient?: any) {
+    let headers: any = {
+      [PARSE_APP_ID_HEADER]: config.appID
+    }
+    if (config.restApiKey) {
+      headers = {
+        ...headers,
+        [PARSE_RESTAPI_KEY_HEADER]: config.restApiKey
+      }
+    }
+    this.httpClient =
+      _httpClient ??
+      create({
+        baseURL: config.url,
+        headers
+      })
+  }
+
+  async get<T>(path: string): Promise<T> {
+    const response = await this.httpClient.get<T, ParseError>(path)
+    return this.handleResponse(response)
+  }
+
+  async post<T>(path: string, data?: any): Promise<T> {
+    const response = await this.httpClient.post<T, ParseError>(path, data)
+    return this.handleResponse(response)
+  }
+
+  async put<T>(path: string, data?: any): Promise<T> {
+    const response = await this.httpClient.put<T, ParseError>(path, data)
+    return this.handleResponse(response)
+  }
+
+  async delete<T>(path: string): Promise<T> {
+    const response = await this.httpClient.delete<T, ParseError>(path)
+    return this.handleResponse(response)
+  }
+
+  handleResponse<T>(response: ApiResponse<T, ParseError>): T | undefined {
+    if (response.problem) {
+      throw response.data
+    }
+    return response.data as T | undefined
+  }
+}
