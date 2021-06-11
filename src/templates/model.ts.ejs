@@ -1,3 +1,14 @@
-module.exports = {
-  name:   '<%= props.name %>'
-}
+import { types, Instance, SnapshotIn, SnapshotOut } from 'mobx-state-tree';
+<% props.imports.forEach(function(importrow){ %>
+  <%- importrow %>
+<%});%>
+
+export const <%= props.name %>Model = types.model('<%= props.name %>', {
+  <% props.fields.forEach(function(field){ %>
+    <%- field.name %>:<%- field.type %>,
+  <%});%>
+});
+
+export interface <%= props.name %> extends Instance<typeof <%= props.name %>Model> {} 
+export interface <%= props.name %>SnapshotIn extends SnapshotIn<typeof <%= props.name %>Model> {} 
+export interface <%= props.name %>SnapshotOut extends SnapshotOut<typeof <%= props.name %>Model> {}
