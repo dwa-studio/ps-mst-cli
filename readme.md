@@ -1,4 +1,4 @@
-# ps-mst-cli
+# pmst
 
 A cli to scaffold your entire mobx-state-tree stores based on your parse server schema.
 
@@ -15,10 +15,10 @@ Following parameters are required :
 Append this parameters to the command like this
 
 ```
-ps-mst-cli [command] --parseAppId [YOU-APP-ID] --parseServerUrl [YOUR-URL] --parseMasterKey [YOUR-MASTER-KEY]
+pmst [command] --parseAppId [YOU-APP-ID] --parseServerUrl [YOUR-URL] --parseMasterKey [YOUR-MASTER-KEY]
 ```
 
-Or you can create a file named **ps-mst-cli.config.js** with the following content :
+Or you can create a file named **pmst.config.js** with the following content :
 
 ```
 module.exports = {
@@ -31,25 +31,17 @@ module.exports = {
 ### Generate models only
 
 ```
-ps-mst-cli generate-models
-```
-
-or
-
-```
-ps-mst-cli gm
+pmst generate-models
+-- or --
+pmst gm
 ```
 
 ### Generate stores and models
 
 ```
-ps-mst-cli generate-store
-```
-
-or
-
-```
-ps-mst-cli gs
+pmst generate-store
+-- or --
+pmst gs
 ```
 
 # License

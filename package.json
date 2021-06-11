@@ -1,11 +1,11 @@
 {
-  "name": "ps-mst-cli",
+  "name": "pmst",
   "version": "0.0.1",
   "description": "ps-mst-cli CLI",
   "private": true,
   "types": "build/types/types.d.ts",
   "bin": {
-    "ps-mst-cli": "bin/ps-mst-cli"
+    "pmst": "bin/pmst"
   },
   "scripts": {
     "format": "prettier --write **/*.{js,ts,tsx,json}",

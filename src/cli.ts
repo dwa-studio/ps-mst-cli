@@ -6,9 +6,9 @@ const { build } = require('gluegun')
 async function run(argv) {
   // create a CLI runtime
   const cli = build()
-    .brand('ps-mst-cli')
+    .brand('pmst')
     .src(__dirname)
-    .plugins('./node_modules', { matching: 'ps-mst-cli-*', hidden: true })
+    .plugins('./node_modules', { matching: 'pmst-*', hidden: true })
     .help() // provides default for help, h, --help, -h
     .version() // provides default for version, v, --version, -v
     .create()

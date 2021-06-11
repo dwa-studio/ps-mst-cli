@@ -5,7 +5,7 @@ const command: GluegunCommand = {
   run: async toolbox => {
     const { print } = toolbox
 
-    print.info('Welcome to your ps-mst-cli')
+    print.info('Welcome to your pmst')
   },
 }
 
